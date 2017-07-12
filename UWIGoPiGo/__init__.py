@@ -12,19 +12,76 @@ SERVO = None
 SLEEP_TIME = 0.3
 PORT = 'I2C1'
 
-def measure():
+def init_sensor():
     """
-    Uses the distance sensor to measure the distance from the robot to the nearest object
-    with the sensor's scope
-    :return: the distance to the nearest object in centimetres
+    Initializes servo
+    :return:
     """
     global ROBOT
     global SENSOR
     # if the sensor has not been initialised yet
     if not SENSOR:
         SENSOR = easy.DistanceSensor(PORT, ROBOT)
+
+def measure():
+    """
+    Uses the distance sensor to measure the distance from the robot to the nearest object
+    with the sensor's scope
+    :return: the distance to the nearest object in centimetres
+    """
+    global SENSOR
+    init_sensor()
     distance = SENSOR.read()
     return distance
+
+def init_servo():
+    """
+    Initializes servo
+    :return:
+    """
+    global SERVO
+    global ROBOT
+    if not SERVO:
+        SERVO = ROBOT.init_servo("SERVO1")
+
+def rotate_servo(position):
+    """
+    Rotates servo to a specific position
+    :param position: the postiion to rotate towards
+    :return: None
+    """
+    global SERVO
+    init_servo()
+    SERVO.rotate_servo(position)
+
+
+def reset_servo():
+    """
+    Resets servo to default position
+    :return: None
+    """
+    global SERVO
+    init_servo()
+    SERVO.reset_servo()
+
+def forward():
+    """
+    Moves the robot forward
+    :return: None
+    """
+    global ROBOT
+    ROBOT.forward()
+
+def backward():
+    """
+    Moves the robot backwards
+    :return: None
+    """
+    global ROBOT
+    ROBOT.backward()
+
+
+
 
 def get_robot():
     """
