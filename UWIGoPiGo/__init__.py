@@ -103,7 +103,7 @@ def march_forward(braking_distance=MAX_INT):
     global ROBOT
     distance = measure()
 
-    while distance > braking_distance:
+    while distance < braking_distance:
         ROBOT.forward()
         time.sleep(SLEEP_TIME)
         distance = measure()
