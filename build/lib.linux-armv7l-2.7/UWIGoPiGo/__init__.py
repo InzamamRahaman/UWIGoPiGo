@@ -17,6 +17,10 @@ import numpy as np
 from six.moves import urllib
 import tensorflow as tf
 
+#PiCamera stuff
+from picamera import PiCamera
+from time import sleep
+
 
 ROBOT = easy.EasyGoPiGo3()
 MAX_INT = 10000
@@ -391,17 +395,24 @@ def maybe_download_and_extract():
     tarfile.open(filepath, 'r:gz').extractall(dest_directory)
 
 def init_eyes():
-    FLAGS.model_dir = '/home/pi/inception'
-    print("Opening eyes...")
-    maybe_download_and_extract()
-    global node_lookup
-    if node_lookup is None:
+	FLAGS.model_dir = '/home/pi/inception'
+	print("Opening eyes...")
+	maybe_download_and_extract()
+	global node_lookup
+	if node_lookup is None:
 		node_lookup = NodeLookup()
-    # Creates graph from saved GraphDef.
-    start_time = time.time()
-    create_graph()
-    graph_time = time.time() - start_time
-    print("Eyes opened! in ",graph_time,'s')
-
+	
+	start_time = time.time()
+	create_graph()
+	graph_time = time.time() - start_time
+	print('Eyes open! in ', graph_time)
+	
+  
 def see(image='/tmp/tmp.jpeg'):
     return run_inference_on_image(image)
+
+def snap():
+	camera = PiCamera()
+	sleep(1)
+	camera.capture('/tmp/tmp.jpeg')
+	camera.close()
