@@ -411,8 +411,8 @@ def init_eyes():
 def see(image='/tmp/tmp.jpeg'):
     return run_inference_on_image(image)
 
-def snap():
+def snap(image='/tmp/tmp.jpeg'):
 	camera = PiCamera()
 	sleep(1)
-	camera.capture('/tmp/tmp.jpeg')
+	camera.capture(image)
 	camera.close()
